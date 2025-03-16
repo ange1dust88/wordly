@@ -1,0 +1,33 @@
+.header {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+
+    &__logo{
+        font-size: 2.2rem;
+        font-weight: 900;
+        letter-spacing: -0.1rem;
+        color: var(--main-color);   
+    }
+
+    &__navs{
+        display: flex;
+        align-items: center;
+        gap: var(--gap);
+
+        &-nav{
+            color: var(--main-color);
+        }
+    }
+
+    &__container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        height: var(--header-height);
+    }
+}
+

@@ -1,0 +1,28 @@
+.smallHeader{
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    &__logo{
+        font-size: 2.2rem;
+        font-weight: 900;
+        letter-spacing: -0.1rem;
+
+        &.black{
+            color: #000;
+        }  
+        &.white{
+            color: #fff;
+        } 
+
+    }
+
+    &__container {
+        display: flex;
+        align-items: center;
+        height: var(--header-height);
+    }
+}
+
+
