@@ -1,45 +1,57 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SmallHeader from "../../smallHeader/SmallHeader";
 import { GoogleLogin } from '@react-oauth/google';
 import './login.scss';
-import Cookies from 'js-cookie';
+import axios from "axios";
+import { useAuthStore, checkAuthStatus } from "../../Stores/useAuthStore"; 
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false); 
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
+  const login = useAuthStore((state) => state.login);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
+  useEffect(() => {
+    checkAuthStatus(); 
+    if (isAuthenticated) {
+      navigate('/dashboard');
+    }
+  }, [isAuthenticated, navigate]);
+
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value);
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
+
+  const handleRememberMeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRememberMe(e.target.checked);
+  };
 
   const handleLogin = async () => {
     if (username && password) {
       setError(null);
       try {
-        const csrfToken = Cookies.get('csrftoken'); 
-
-        const response = await fetch("http://127.0.0.1:8000/users/api/login/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": csrfToken || '', 
-          },
-          body: JSON.stringify({
-            username: username,
-            password: password,
-          }),
+        const response = await axios.post("http://127.0.0.1:8000/api/token/", {
+          username,
+          password,
         });
 
-        if (response.ok) {
-          navigate("/dashboard");
+        login(response.data.access, response.data.refresh);
+
+        if (rememberMe) {
+          localStorage.setItem("access", response.data.access);
+          localStorage.setItem("refresh", response.data.refresh);
         } else {
-          const data = await response.json();
-          setError(data.detail || "Invalid credentials");
+          sessionStorage.setItem("access", response.data.access);
+          sessionStorage.setItem("refresh", response.data.refresh);
         }
+
+        navigate("/dashboard"); 
       } catch (error) {
-        setError("Network error, please try again later");
+        setError("Invalid credentials, please try again.");
       }
     } else {
       setError("Both fields are required");
@@ -47,29 +59,9 @@ function Login() {
   };
 
   const handleGoogleSuccess = async (response: any) => {
-    if (response.credential) {
-      try {
-        const res = await fetch("http://127.0.0.1:8000/accounts/google/login/callback/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": Cookies.get('csrftoken') || '', 
-          },
-          credentials: 'include',
-          body: JSON.stringify({ token: response.credential }),
-        });
-  
-        if (res.ok) {
-          navigate("/dashboard");
-        } else {
-          const data = await res.json();
-          setError(data.detail || "Something went wrong!");
-        }
-      } catch (error) {
-        setError("Network error, please try again later");
-      }
-    }
+
   };
+
   return (
     <>
       <SmallHeader isBlack={false} />
@@ -98,15 +90,19 @@ function Login() {
             </div>
 
             <div className="login__box-inputs-checkbox">
-              <input type="checkbox" />
+              <input 
+                type="checkbox" 
+                checked={rememberMe} 
+                onChange={handleRememberMeChange} 
+              />
               <p> Remember me on this device</p>
             </div>
 
             {error ? (
-                <p className='error-active'>{error}</p>
-              ) : (
-                <p className='login__box-error'> - </p>
-              )}
+              <p className='error-active'>{error}</p>
+            ) : (
+              <p className='login__box-error'> - </p>
+            )}
 
             <input
               type="button"

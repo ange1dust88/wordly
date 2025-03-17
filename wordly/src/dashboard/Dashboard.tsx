@@ -1,23 +1,35 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars,faFolder, faHouse, faIdCard, faMagnifyingGlass, faPlus } from '@fortawesome/free-solid-svg-icons';
 import './dashboard.scss'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import General from "../General/General";
 import Library from "../Library/Library";
 import Cards from "../Cards/Cards";
+import { useAuthStore } from "../Stores/useAuthStore";
 
 function Dashboard() {
 
   const [sidebarState, setSidebarState] = useState<Boolean>(true);
   const [activeBlock, setActiveBlock] = useState<number>(0); 
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const navigate = useNavigate();
 
 
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login');
+    }
+  }, [isAuthenticated, navigate]);
+
+  
   const handleBlockClick = (index: number) => {
     setActiveBlock(index); 
   };
 
   return (
+
+    
     <div className="dashboard">
       <div className="dashboard__header">
           <div className="dashboard__header-left">

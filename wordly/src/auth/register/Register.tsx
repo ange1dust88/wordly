@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SmallHeader from "../../smallHeader/SmallHeader";
+import axios from "axios";
 import "./register.scss";
 
 function Register() {
@@ -20,26 +21,21 @@ function Register() {
     if (isFormValid) {
       setError(null); 
       try {
-        const response = await fetch("http://127.0.0.1:8000/users/api/register/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username: username,
-            email: email,
-            password: password,
-          }),
+        const response = await axios.post("http://127.0.0.1:8000/api/user/register/", {
+          username,
+          email,
+          password,
         });
 
-        if (response.ok) {
+        if (response.status === 201) {
           navigate("/login");
-        } else {
-          const data = await response.json();
-          setError(data.detail || "Something went wrong!");
         }
-      } catch (error) {
-        setError("Network error, please try again later");
+      } catch (error: any) {
+        if (error.response && error.response.data) {
+          setError(error.response.data.email || error.response.data.username || "Network error, please try again later");
+        } else {
+          setError("Network error, please try again later");
+        }
       }
     } else {
       setError("All fields are required");
