@@ -1,6 +1,7 @@
 import Header from '../header/Header'
 import './hero.scss'
 function Hero() {
+  
   return (
     <>
     <Header/>

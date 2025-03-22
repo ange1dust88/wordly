@@ -18,6 +18,7 @@
     "axios": "^1.8.3",
     "firebase": "^11.4.0",
     "js-cookie": "^3.0.5",
+    "query-string": "^9.1.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-fontawesome": "^1.7.1",

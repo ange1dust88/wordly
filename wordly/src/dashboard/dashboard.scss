@@ -119,7 +119,7 @@
         flex-direction: column;
         justify-content: start;
         align-items: start;
-
+        position: relative;
         padding-inline: 2rem;
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         height: calc(100vh - var(--header-height));
@@ -189,10 +189,11 @@
 
     &__main{
         display: flex;
-
         &-content{
             padding: 2rem;
             width: 100%;
+            height: calc(100vh - var(--header-height));
+            overflow-y: scroll;
         }
     }
 }

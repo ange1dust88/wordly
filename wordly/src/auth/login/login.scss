@@ -79,6 +79,20 @@
 
             }
 
+            &-social{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 0.5rem;
+                transition: all 0.2s ease-in-out;
+                img{
+                    height: 1.7rem;
+                }
+                &:hover{
+                    background-color: #ffffff;
+                }
+            }
+
 
 
             &-border{

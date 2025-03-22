@@ -29,8 +29,19 @@
             align-items: center;
             gap: var(--gap);
 
-            &:hover{
-                cursor: pointer;
+            &-icon{
+
+                &:hover{
+                    cursor: pointer;
+                    color: #635bff;
+                }
+                &--disabled{
+                    color: #b3b3b3;
+                    &:hover{
+                        cursor: default;
+                        color: #b3b3b3;
+                    }
+                }
             }
         }
     }
@@ -61,6 +72,7 @@
 
             input{
                 &:focus{
+                    border-bottom: 4px solid #635bff;
                     outline: none;
                 }
             }

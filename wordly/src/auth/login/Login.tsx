@@ -1,27 +1,18 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import SmallHeader from "../../smallHeader/SmallHeader";
-import { GoogleLogin } from '@react-oauth/google';
 import './login.scss';
 import axios from "axios";
-import { useAuthStore, checkAuthStatus } from "../../Stores/useAuthStore"; 
+import { useAuthStore } from "../../Stores/useAuthStore";
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false); 
+  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const login = useAuthStore((state) => state.login);
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-
-  useEffect(() => {
-    checkAuthStatus(); 
-    if (isAuthenticated) {
-      navigate('/dashboard');
-    }
-  }, [isAuthenticated, navigate]);
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value);
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
@@ -49,7 +40,7 @@ function Login() {
           sessionStorage.setItem("refresh", response.data.refresh);
         }
 
-        navigate("/dashboard"); 
+        navigate("/dashboard");
       } catch (error) {
         setError("Invalid credentials, please try again.");
       }
@@ -58,8 +49,14 @@ function Login() {
     }
   };
 
-  const handleGoogleSuccess = async (response: any) => {
-
+  const loginViaGithub = async (event: React.MouseEvent) => {
+    event.preventDefault(); 
+    try {
+      window.location.href = "http://127.0.0.1:8000/accounts/github/login/";
+    } catch (error) {
+      setError("An error occurred while logging in via GitHub.");
+      console.error("GitHub login error:", error);
+    }
   };
 
   return (
@@ -90,18 +87,18 @@ function Login() {
             </div>
 
             <div className="login__box-inputs-checkbox">
-              <input 
-                type="checkbox" 
-                checked={rememberMe} 
-                onChange={handleRememberMeChange} 
+              <input
+                type="checkbox"
+                checked={rememberMe}
+                onChange={handleRememberMeChange}
               />
               <p> Remember me on this device</p>
             </div>
 
             {error ? (
-              <p className='error-active'>{error}</p>
+              <p className="error-active">{error}</p>
             ) : (
-              <p className='login__box-error'> - </p>
+              <p className="login__box-error"> - </p>
             )}
 
             <input
@@ -112,10 +109,11 @@ function Login() {
             />
 
             <p className="login__box-inputs-border">or</p>
-
-            <GoogleLogin
-              onSuccess={handleGoogleSuccess}      
-            />
+            <button 
+              className="login__box-inputs-input login__box-inputs-social"
+              onClick={loginViaGithub}>
+                <img src='github-logo.png'/>Login with github
+            </button>
           </div>
 
           <span className="login__box-bottom">
