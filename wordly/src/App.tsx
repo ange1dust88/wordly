@@ -5,6 +5,7 @@ import Dashboard from './dashboard/Dashboard';
 import Hero from './hero/Hero'
 import './index.scss'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import ModuleDetail from './ModuleDetail/ModuleDetail';
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
-
+          <Route path="/module-detail/:code" element={<ModuleDetail />} />
         </Routes>
       </Router>
     </>

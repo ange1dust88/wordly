@@ -1,25 +1,33 @@
+import random
+import string
 from django.db import models
-from django.contrib.auth.models import User
-
 
 
 class Module(models.Model):
-    title = models.CharField(max_length=255)  
-    description = models.TextField()  
-    creator_name = models.CharField(max_length=255, default='Unknown') 
-    created_at = models.DateTimeField(auto_now_add=True)  
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    creator_name = models.CharField(max_length=100)
+    code = models.CharField(max_length=255, unique=True, blank=True) 
 
     def __str__(self):
         return self.title
-    def __str__(self):
-        return self.title
 
-class Word(models.Model):
-    module = models.ForeignKey(Module, related_name='words', on_delete=models.CASCADE)  
-    term = models.CharField(max_length=255)  
-    definition = models.TextField()  
-    image = models.ImageField(upload_to='words_images/', null=True, blank=True)  
+    def save(self, *args, **kwargs):
+        if not self.code: 
+            self.code = self.generate_code()  
+        super().save(*args, **kwargs) 
+
+    def generate_code(self):
+        characters = string.ascii_letters + string.digits + "$#@!"
+        return ''.join(random.choice(characters) for _ in range(32)) 
+
+    
+class Card(models.Model):
+    term = models.CharField(max_length=100)
+    definition = models.TextField()
+    module = models.ForeignKey(Module, related_name="cards", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.term
+
 

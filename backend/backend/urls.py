@@ -1,10 +1,8 @@
 from django.contrib import admin
 from django.urls import path, include
-from api.views import CreateUserView
+from api import views
+from api.views import CreateUserView, GetModuleByCodeView, ModuleListView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from django.urls import path, include
-from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
-from allauth.socialaccount.providers.oauth2.views import OAuth2CallbackView, OAuth2LoginView
 from api.views import CreateUserView
 
 
@@ -15,4 +13,7 @@ urlpatterns = [
     path("api/token/refresh/", TokenRefreshView.as_view(), name = "refresh"),
     path("api-auth/", include("rest_framework.urls")),
     path("accounts/", include('allauth.urls')),
+    path('create-module/', views.create_module, name='create_module'),
+    path('modules/', ModuleListView.as_view(), name='module-list'),
+    path('modules/<str:code>/', GetModuleByCodeView.as_view(), name='get_module_by_code'),
 ]

@@ -2,7 +2,7 @@
     padding-right: 16rem;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 2.5rem;
 
     &__header{
         display: flex;
@@ -79,9 +79,7 @@
     
             &:hover {
                 background-color: #00000042;
-    
-               
-                
+                cursor: pointer;
             }
         }
     }
@@ -91,7 +89,6 @@
         display: flex;
         align-items: center;
         justify-content: end;
-
         &-button{
             color: #fff;
             font-size: 1.5rem;
@@ -109,6 +106,7 @@
 
             &:hover{
                 background-color: #00000042;
+                cursor: pointer;
             }
         }
     }

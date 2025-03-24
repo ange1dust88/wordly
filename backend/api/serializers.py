@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Module, Word
+from .models import Module, Card
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -25,16 +25,25 @@ class UserSerializer(serializers.ModelSerializer):
 
         user = User.objects.create_user(username=username, email=email, password=password)
         return user
+    
 
-
-class WordSerializer(serializers.ModelSerializer):
+class CardSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Word
-        fields = ['id', 'term', 'definition', 'image']
-
+        model = Card
+        fields = ['term', 'definition']
 class ModuleSerializer(serializers.ModelSerializer):
-    words = WordSerializer(many=True)  
+    cards = CardSerializer(many=True) 
 
     class Meta:
         model = Module
-        fields = ['id', 'title', 'description', 'creator_name', 'words']
+        fields = ['title', 'description', 'creator_name', 'cards', 'code']  
+
+    def create(self, validated_data):
+        cards_data = validated_data.pop('cards')  
+
+        module = Module.objects.create(**validated_data)
+
+        for card_data in cards_data:
+            Card.objects.create(module=module, **card_data)
+
+        return module

@@ -1,21 +1,15 @@
-from urllib.parse import urlencode
-from venv import logger
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import api_view 
 from django.contrib.auth.models import User
-from rest_framework import generics
-from .serializers import UserSerializer
+from requests import Response
+from .serializers import UserSerializer, ModuleSerializer
 from rest_framework.permissions import AllowAny
-
-from rest_framework import viewsets
-from .models import Module, Word
-from .serializers import ModuleSerializer, WordSerializer
-from rest_framework_simplejwt.tokens import RefreshToken
-
-from django.contrib.auth.models import User
 from environ import Env
+from rest_framework import status, generics
+from .models import Module
+from rest_framework.views import APIView
 
-from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
-from allauth.socialaccount.providers.oauth2.client import OAuth2Client
-from dj_rest_auth.registration.views import SocialLoginView
+
 
 env = Env()
 env.read_env()
@@ -25,11 +19,30 @@ class CreateUserView(generics.CreateAPIView):
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
 
-
-class ModuleViewSet(viewsets.ModelViewSet):
-    queryset = Module.objects.all()
+class ModuleListView(generics.ListAPIView):
+    queryset = Module.objects.all() 
     serializer_class = ModuleSerializer
 
-class WordViewSet(viewsets.ModelViewSet):
-    queryset = Word.objects.all()
-    serializer_class = WordSerializer
+
+@csrf_exempt  
+@api_view(['POST'])
+def create_module(request):
+    if request.method == 'POST':
+        serializer = ModuleSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()  
+            return Response(serializer.data, status=status.HTTP_201_CREATED) 
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+
+class GetModuleByCodeView(APIView):
+    permission_classes = [AllowAny]  # 
+
+    def get(self, request, code, *args, **kwargs):
+        try:
+            module = Module.objects.get(code=code)
+            serializer = ModuleSerializer(module)
+            return Response(serializer.data)
+        except Module.DoesNotExist:
+            return Response({"detail": "Module not found."}, status=status.HTTP_404_NOT_FOUND)

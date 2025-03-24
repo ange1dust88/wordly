@@ -30,7 +30,7 @@ function Login() {
           password,
         });
 
-        login(response.data.access, response.data.refresh);
+        login(response.data.access, response.data.refresh, username);
 
         if (rememberMe) {
           localStorage.setItem("access", response.data.access);

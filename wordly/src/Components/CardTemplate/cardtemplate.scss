@@ -23,27 +23,21 @@
             
         }
 
-        &-icons{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: var(--gap);
+        &-icon{
 
-            &-icon{
-
+            &:hover{
+                cursor: pointer;
+                color: #635bff;
+            }
+            &--disabled{
+                color: #b3b3b3;
                 &:hover{
-                    cursor: pointer;
-                    color: #635bff;
-                }
-                &--disabled{
+                    cursor: default;
                     color: #b3b3b3;
-                    &:hover{
-                        cursor: default;
-                        color: #b3b3b3;
-                    }
                 }
             }
         }
+        
     }
 
     &__main{
@@ -72,7 +66,7 @@
 
             input{
                 &:focus{
-                    border-bottom: 4px solid #635bff;
+                    border-bottom: 3px solid #635bff;
                     outline: none;
                 }
             }
@@ -80,31 +74,6 @@
 
         }
 
-        &-image{
-            height: 3rem;
-            width: 3rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: #000 3px dotted;
-            border-radius: var(--radius);
-            font-size: 1.4rem;
-            background: transparent; 
-            transition: 0.2s all ease-in;
-            z-index: 1;
-
-            &:hover{
-                cursor: pointer;
-                background: linear-gradient(45deg, 
-                    rgba(255, 0, 0, 0.7),  
-                    rgba(0, 0, 255, 0.4), 
-                    rgba(255, 165, 0, 0.6),
-                    rgba(128, 0, 128, 0.5)  
-                );
-            }
-
-            
-        }
     }
 
 }

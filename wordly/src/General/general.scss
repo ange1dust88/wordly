@@ -1,0 +1,27 @@
+.general{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    &__latest{
+        &-title{
+            padding: 0.5rem;
+        }
+        &-list{
+            margin: 3rem 0;
+            padding: 0.5rem;
+            display: flex;
+            flex-direction: row;
+            justify-content: start;
+            align-items: center;
+            gap: 2rem;
+            overflow-x: scroll;
+            ::-webkit-scrollbar {
+                display: none;  
+            }
+            
+            -ms-overflow-style: none;  
+            scrollbar-width: none;
+        }
+    }
+}
