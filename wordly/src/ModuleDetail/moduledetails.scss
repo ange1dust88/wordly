@@ -6,6 +6,12 @@
     height: calc(100vh - var(--header-height) );
     width: 100%;
     overflow-y: scroll;
+    ::-webkit-scrollbar {
+        display: none; 
+    }
+    scrollbar-width: none;
+    scrollbar-color: transparent transparent;
+
     &__container{
         width: 60rem;
         height: 100%;
@@ -19,6 +25,10 @@
         border-bottom: 1px #e2e2e2 solid;
         padding-bottom: 2rem;
         margin-bottom: 2rem;
+        &-title{
+            font-size: 2rem;
+            font-weight: 600;
+        }
         &-block{
             display: flex;
             flex-direction: column;
@@ -41,4 +51,9 @@
             font-weight: bold;
         }
     }
+
+    &__cards{
+        height: 30rem;
+    }
+    
 }

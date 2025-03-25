@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import SmallHeader from "../../smallHeader/SmallHeader";
 import './login.scss';
 import axios from "axios";

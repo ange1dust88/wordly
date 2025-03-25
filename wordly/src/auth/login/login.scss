@@ -26,8 +26,8 @@
         top: 45%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 580px;
-        height: 600px;
+        width: 600px;
+        height: 640px;
         background-color: #fff;
         border-radius: var(--radius);
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
@@ -35,6 +35,9 @@
 
         &-title{
             padding: var(--padding) var(--padding) 0 var(--padding);
+            font-size: 2rem;
+            font-weight: 500;
+            
         }
 
         &-error{

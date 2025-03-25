@@ -2,28 +2,54 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import useModuleStore from '../Stores/useModuleStore';
 import { useAuthStore } from '../Stores/useAuthStore';
+import Card from '@/components/ui/Card/Card';
 import './moduledetails.scss'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+} from "@/components/ui/carousel"
 
 
-interface Card {
+
+interface CardTypes {
   term: string;
   definition: string;
 }
 
-interface Module {
+interface ModuleTypes {
   title: string;
   description: string;
   creator_name: string;
-  cards: Card[];
+  cards: CardTypes[];
   code: string;
 }
 
 function ModuleDetail() {
   const { code } = useParams();  
   const { modules } = useModuleStore();
-  const [moduleData, setModuleData] = useState<Module | null>(null); 
+  const [moduleData, setModuleData] = useState<ModuleTypes | null>(null); 
   const { accessToken, isLoading, logout} = useAuthStore();
   const navigate = useNavigate();
+  const [api, setApi] = useState<CarouselApi>()
+  const [current, setCurrent] = useState(0)
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    if (!api) {
+      return
+    }
+
+    setCount(api.scrollSnapList().length)
+    setCurrent(api.selectedScrollSnap() + 1)
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap() + 1)
+    })
+  }, [api])
 
   const handleLogout = () => {
     console.log('Logging out...');
@@ -73,6 +99,8 @@ function ModuleDetail() {
     return <div>Loading...</div>;
   }
 
+
+
   return (
     <div className="dashboard">
       <div className="dashboard__header">
@@ -96,18 +124,35 @@ function ModuleDetail() {
             </div>
             <p className='moduledetails__header-words'>{moduleData.cards.length} words</p>
           </div>
-          <div className="cards">
-            {moduleData.cards.map((card, index) => (
-              <div key={index} className="card">
-                <h4>{card.term}</h4>
-                <p>{card.definition}</p>
-              </div>
-            ))}
+      
+          <Carousel setApi={setApi} className='moduledetails__cards'>
+            <CarouselContent className='moduledetails__cards'>
+              {moduleData.cards.map((card, index) => (
+            
+              <CarouselItem key={index}>
+                <Card 
+                term = {card.term}
+                definition={card.definition}
+                index = {index} />
+              </CarouselItem>
+            ))} 
+            </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+          </Carousel>
+          <div className="text-center text-sm text-muted-foreground">
+            Card {current} of {count}
           </div>
+
+
+          
         </div>
       </div>
 
     </div>
+
+
+
 
   
   );

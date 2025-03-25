@@ -71,6 +71,8 @@
                 border-radius: var(--radius);
                 padding-left: 1.5rem;
                 font-size: 1rem;
+                border: #b3b3b3 1px solid;
+                box-shadow: 0 4px 20px #b3b3b367;
             }
             &-icon{
                 position: absolute;
@@ -85,7 +87,7 @@
             
             width: 15rem;
 
-            &-icon{
+            &-button{
                 background: linear-gradient(45deg, 
                     rgba(255, 0, 0, 0.7),  
                     rgba(0, 0, 255, 0.4), 
@@ -93,13 +95,13 @@
                     rgba(128, 0, 128, 0.5)  
                 );
                 transition: all 0.2s ease-in-out;
-                padding: 0.3rem;
-                height: 2rem;
-                width: 2rem;
+                padding: 0.3rem 0.6rem;
+                font-weight: 700;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 border-radius: var(--radius);
+                box-shadow: 0 4px 20px #b3b3b367;
 
                 &:hover{
                     background-color: #e2e2e2;
@@ -194,6 +196,11 @@
             width: 100%;
             height: calc(100vh - var(--header-height));
             overflow-y: scroll;
+            ::-webkit-scrollbar {
+                display: none; 
+            }
+            scrollbar-width: none;
+            scrollbar-color: transparent transparent;
         }
     }
 }

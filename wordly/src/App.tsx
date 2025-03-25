@@ -3,7 +3,7 @@ import Login from './auth/login/Login';
 import Register from './auth/register/Register';
 import Dashboard from './dashboard/Dashboard';
 import Hero from './hero/Hero'
-import './index.scss'
+import './index.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ModuleDetail from './ModuleDetail/ModuleDetail';
 

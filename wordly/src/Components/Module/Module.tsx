@@ -22,7 +22,7 @@ function Module({ title, description, creatorName, cards, code }: ModuleTypes) {
       className="module"
     >
       <div className="module__top">
-        <h2>{title}</h2>
+        <h2 className='module__top-title'>{title}</h2>
         <p>{description}</p>
       </div>
       <div className="module__bottom">

@@ -8,7 +8,7 @@
             padding: 0.5rem;
         }
         &-list{
-            margin: 3rem 0;
+            margin: 2rem 0;
             padding: 0.5rem;
             display: flex;
             flex-direction: row;
@@ -23,5 +23,9 @@
             -ms-overflow-style: none;  
             scrollbar-width: none;
         }
+    }
+    &-title{
+        font-size: 2rem;
+        font-weight: 800;
     }
 }
