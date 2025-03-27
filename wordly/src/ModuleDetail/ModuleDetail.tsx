@@ -13,8 +13,6 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel"
 
-
-
 interface CardTypes {
   term: string;
   definition: string;
@@ -32,24 +30,24 @@ function ModuleDetail() {
   const { code } = useParams();  
   const { modules } = useModuleStore();
   const [moduleData, setModuleData] = useState<ModuleTypes | null>(null); 
-  const { accessToken, isLoading, logout} = useAuthStore();
+  const { accessToken, isLoading, logout } = useAuthStore();
   const navigate = useNavigate();
-  const [api, setApi] = useState<CarouselApi>()
-  const [current, setCurrent] = useState(0)
-  const [count, setCount] = useState(0)
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     if (!api) {
-      return
+      return;
     }
 
-    setCount(api.scrollSnapList().length)
-    setCurrent(api.selectedScrollSnap() + 1)
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap() + 1);
 
     api.on("select", () => {
-      setCurrent(api.selectedScrollSnap() + 1)
-    })
-  }, [api])
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
 
   const handleLogout = () => {
     console.log('Logging out...');
@@ -57,10 +55,10 @@ function ModuleDetail() {
     console.log('Logged out, navigating to login...');
     navigate('/login');
   };
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
- 
 
   useEffect(() => {
     if (code) {
@@ -100,7 +98,6 @@ function ModuleDetail() {
   }
 
 
-
   return (
     <div className="dashboard">
       <div className="dashboard__header">
@@ -114,7 +111,6 @@ function ModuleDetail() {
         </div>
       </div>
 
-    
       <div className="moduledetails">
         <div className="moduledetails__container">
           <div className="moduledetails__header">
@@ -124,37 +120,47 @@ function ModuleDetail() {
             </div>
             <p className='moduledetails__header-words'>{moduleData.cards.length} words</p>
           </div>
+
+          <div className="moduledetails__modes">
+            <Link to ={`/module-detail/${code}/cardMode`} className="moduledetails__modes-mode">
+              <div className="moduledetails__modes-mode-cont">
+                <h2> Cards <span>🖼️</span></h2>
+                
+              </div>
+            </Link>
+            <Link to ='' className="moduledetails__modes-mode">
+              <div className="moduledetails__modes-mode-cont">
+                <h2>Learning<span>🔊</span></h2>
+              </div>
+            </Link>
+            <Link to ='' className="moduledetails__modes-mode">
+            <div className="moduledetails__modes-mode-cont">
+                <h2>Test <span>📄</span></h2>
+              </div>
+            </Link>
+          </div>
       
           <Carousel setApi={setApi} className='moduledetails__cards'>
             <CarouselContent className='moduledetails__cards'>
               {moduleData.cards.map((card, index) => (
-            
-              <CarouselItem key={index}>
-                <Card 
-                term = {card.term}
-                definition={card.definition}
-                index = {index} />
-              </CarouselItem>
-            ))} 
-            </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
+                <CarouselItem key={index}>
+                  <Card 
+                    term={card.term}
+                    definition={card.definition}
+                    index={index}
+                  />
+                </CarouselItem>
+              ))} 
+            </CarouselContent >
+            <CarouselPrevious className='moduledetails__cards-arrow moduledetails__cards-arrow--left' />
+            <CarouselNext className='moduledetails__cards-arrow moduledetails__cards-arrow--right' />
           </Carousel>
-          <div className="text-center text-sm text-muted-foreground">
-            Card {current} of {count}
+          <div className="text-center text-2xl">
+             {current}/{count}
           </div>
-
-
-          
         </div>
       </div>
-
     </div>
-
-
-
-
-  
   );
 }
 

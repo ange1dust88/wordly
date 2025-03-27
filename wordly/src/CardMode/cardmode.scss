@@ -1,0 +1,118 @@
+.cardmode{
+    height: calc(100vh - var(--header-height) );
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: scroll;
+    ::-webkit-scrollbar {
+        display: none; 
+    }
+    scrollbar-width: none;
+    scrollbar-color: transparent transparent;
+
+    &__statistic{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        
+        &-block{
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        
+     
+    }
+
+    &__container{
+        width: 80rem;
+        height: 100%;
+        padding: 4rem 1rem;
+    }
+
+    &__cards{
+        height: 70vh;
+        position: relative;
+
+        &-count{
+            position: absolute;
+            z-index: 1;
+            left: 50%;
+            top: 2.1rem;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            font-weight: 800;
+
+        }
+        
+    }
+
+    &__controls{
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+        gap: 1.5rem;
+
+    }
+}
+
+
+.right{
+    color: #05ce69;
+    &-count{
+        border: 2px solid #05ce69;
+        padding: 0.1rem 0.6rem;
+        border-radius: var(--radius);
+        font-weight: 800;
+    }
+
+    &-block{
+        border-radius: var(--radius);
+        background-color: rgb(165, 240, 202);
+        padding: 0.2rem 0.6rem;
+        font-size: 1.3rem;
+        font-weight: 900;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+ 
+}
+.wrong{
+    color: #c71d1d;
+    &-count{
+        border: 2px solid #c71d1d;
+        padding: 0.1rem 0.6rem;
+        border-radius: var(--radius);
+        font-weight: 800;
+    }
+    &-block{
+        border-radius: var(--radius);
+        background-color: #fa9c9c;
+        padding: 0.2rem 0.6rem;
+        font-size: 1.3rem;
+        font-weight: 900;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+   
+}
+.right, .wrong{
+    &-button{
+        border: 2px solid #6d6d6d;
+        height: 3rem;
+        width: 4rem;
+        border-radius: var(--radius);
+        font-weight: 800;
+        font-size: 2rem;
+        transition: all 0.3s ease-in-out;
+        &:hover{
+            cursor: pointer;
+            background-color: #e2e2e2;
+        }
+    }
+}

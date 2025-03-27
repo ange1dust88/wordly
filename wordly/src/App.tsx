@@ -1,4 +1,3 @@
-
 import Login from './auth/login/Login';
 import Register from './auth/register/Register';
 import Dashboard from './dashboard/Dashboard';
@@ -6,6 +5,7 @@ import Hero from './hero/Hero'
 import './index.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ModuleDetail from './ModuleDetail/ModuleDetail';
+import CardMode from './CardMode/CardMode'; 
 
 function App() {
   return (
@@ -17,6 +17,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/module-detail/:code" element={<ModuleDetail />} />
+          <Route path="/module-detail/:code/cardMode" element={<CardMode />} /> 
         </Routes>
       </Router>
     </>
@@ -24,15 +25,3 @@ function App() {
 }
 
 export default App;
-
-
-{
-
-  /*
-  сделал: ошибки оформить,  имя добавить к логину
-  первые страницы: запомнить меня реализовать, показывать залогинен ли пользователь на главной
-
-  программа: подключить shadcn + tailwind,  сделать главную страницу ,подлючить дб 
-  
-  */
-}

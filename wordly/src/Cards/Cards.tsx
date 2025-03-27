@@ -6,6 +6,7 @@ import { useAuthStore } from '../Stores/useAuthStore';
 interface CardData {
   term: string;
   definition: string;
+  
 }
 
 function Cards() {

@@ -49,6 +49,17 @@
             align-items: center;
             border-radius: var(--radius);
             background-color: #fff;
+
+            &-icon{
+              position: absolute;
+              top: 2rem;
+              right: 2rem;
+              font-size: 2rem;
+              &:hover{
+                cursor: pointer;
+                color: #6d6d6d;
+              }
+            }
            
         }
 
@@ -58,11 +69,6 @@
         font-weight: bold;
 
     }
-  }
-  
-  .card__front {
-   
-    
   }
   
   .card__back {
