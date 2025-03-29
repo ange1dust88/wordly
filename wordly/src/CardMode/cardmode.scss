@@ -61,9 +61,9 @@
 
 
 .right{
-    color: #05ce69;
+    color: #b770e5;
     &-count{
-        border: 2px solid #05ce69;
+        border: 2px solid #b770e5;
         padding: 0.1rem 0.6rem;
         border-radius: var(--radius);
         font-weight: 800;
@@ -71,7 +71,7 @@
 
     &-block{
         border-radius: var(--radius);
-        background-color: rgb(165, 240, 202);
+        background-color: #d6aaf3;
         padding: 0.2rem 0.6rem;
         font-size: 1.3rem;
         font-weight: 900;
@@ -82,16 +82,16 @@
  
 }
 .wrong{
-    color: #c71d1d;
+    color: #ef427e;
     &-count{
-        border: 2px solid #c71d1d;
+        border: 2px solid #ef427e;
         padding: 0.1rem 0.6rem;
         border-radius: var(--radius);
         font-weight: 800;
     }
     &-block{
         border-radius: var(--radius);
-        background-color: #fa9c9c;
+        background-color: #fca1c0;
         padding: 0.2rem 0.6rem;
         font-size: 1.3rem;
         font-weight: 900;

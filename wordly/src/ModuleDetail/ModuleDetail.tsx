@@ -128,16 +128,20 @@ function ModuleDetail() {
                 
               </div>
             </Link>
-            <Link to ='' className="moduledetails__modes-mode">
+
+            <Link to ={`/module-detail/${code}/memorizingMode`} className="moduledetails__modes-mode">
               <div className="moduledetails__modes-mode-cont">
-                <h2>Learning<span>🔊</span></h2>
+                <h2>Memorizing<span>🔊</span></h2>
               </div>
             </Link>
-            <Link to ='' className="moduledetails__modes-mode">
+
+            <Link to ={`/module-detail/${code}/testMode`} className="moduledetails__modes-mode">
             <div className="moduledetails__modes-mode-cont">
                 <h2>Test <span>📄</span></h2>
               </div>
             </Link>
+
+            
           </div>
       
           <Carousel setApi={setApi} className='moduledetails__cards'>

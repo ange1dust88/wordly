@@ -41,7 +41,6 @@ a {
 }
 
 .button {
-  background-color: transparent;
   color: var(--main-color);
   border: none;
   background-color: rgba(252, 252, 252, 0.3);

@@ -99,7 +99,6 @@ function CardMode() {
     return <div>Loading...</div>;
   }
 
-
   const handleKnown = (term: string) => {
     setKnownWords((prevKnownWords) => [...prevKnownWords, term]);
     moveToNextCard();
@@ -114,10 +113,11 @@ function CardMode() {
     if (api) {
       const nextIndex = (current + 1) % moduleData.cards.length;
       setCurrent(nextIndex);
+      api.scrollTo(nextIndex);  // Перемещаемся к следующей карточке
     }
   };
 
-  const isLastCard = moduleData.cards.length === knownWords.length + unknownWords.length; 
+  const isLastCard = moduleData.cards.length === knownWords.length + unknownWords.length;
 
   const handleRestart = () => {
     setKnownWords([]); 
@@ -191,7 +191,6 @@ function CardMode() {
           </div>
         </div>
       )}
-
     </div>
   );
 }
