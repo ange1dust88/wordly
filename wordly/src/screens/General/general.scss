@@ -1,0 +1,31 @@
+.general{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    &__latest, &__authors, &__questions{
+        &-title{
+            padding-inline: 0.5rem;
+        }
+        &-list{
+            margin: 0.5rem 0;
+            padding: 1rem 0.5rem;
+            display: flex;
+            flex-direction: row;
+            justify-content: start;
+            align-items: center;
+            gap: 1rem;
+            overflow-x: auto;
+            ::-webkit-scrollbar {
+                display: none;  
+            }
+            
+            -ms-overflow-style: none;  
+            scrollbar-width: none;
+        }
+    }
+    &-title{
+        font-size: 2rem;
+        font-weight: 800;
+    }
+}

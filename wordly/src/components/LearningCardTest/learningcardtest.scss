@@ -1,0 +1,106 @@
+.learningcard{
+    border: 2px solid #b3b3b3;
+    height: 35rem;
+    max-width: 60rem;
+    width: 100%;
+    border-radius: var(--radius);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    padding: 4rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    background-color: #fff;
+
+    &__header{
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.5rem;
+    }
+    &__word{
+        font-size: 3rem;
+    }
+    &__bottom{
+        &-title{
+            font-size: 1.5rem;
+        }
+        &-options{
+            padding: 2rem 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 2rem;
+            position: relative;
+            &-option{
+                border: 3px solid #b3b3b3;
+                font-size: 1.5rem;
+                border-radius: var(--radius);
+                padding: 0.2rem 0.6rem;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+                transition: 0.3s all ease-in-out;
+                flex-direction: row;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                
+
+                &-icon{
+                    font-size: 1.5rem;
+                    margin-right: 0.5rem;
+                }
+                
+                &:hover{
+                    cursor: pointer;
+                    border: 3px solid #000;
+                    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+                }
+
+                &--selected {
+                    outline: 2px solid #635bff; /* Зеленая рамка для выбранного ответа */
+                  }
+                  
+                &--disabled {
+                    pointer-events: none;
+                    opacity: 0.5;
+                }
+                  
+                
+
+            }
+        }
+        
+         &-nav{
+            display: flex;
+            justify-content: end;
+            &-button{
+                position: absolute;
+                font-size: 1.3rem;
+                background: linear-gradient(45deg, 
+                    rgba(255, 0, 0, 0.7),  
+                    rgba(0, 0, 255, 0.4), 
+                    rgba(255, 165, 0, 0.6),
+                    rgba(128, 0, 128, 0.5)  
+                );
+                transition: all 0.2s ease-in-out;
+                padding: 0.3rem 0.6rem;
+                font-weight: 700;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: var(--radius);
+                box-shadow: 0 4px 20px #b3b3b367;
+
+                &:hover{
+                    background-color: #e2e2e2;
+                    cursor: pointer;
+                }
+                &:active{
+                    background-color: #b3b3b3;
+                }
+            }
+         }
+    }
+}
+
+
