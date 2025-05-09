@@ -92,8 +92,33 @@
                 rgba(0, 0, 255, 0.4), 
                 rgba(255, 165, 0, 0.6),
                 rgba(128, 0, 128, 0.5)  
-            );
+                );
             }
+
+            &-premium{
+                background: linear-gradient(45deg, 
+                rgba(255, 0, 0, 0.7),  
+                rgba(0, 0, 255, 0.4), 
+                rgba(255, 165, 0, 0.6),
+                rgba(128, 0, 128, 0.5)  
+                );
+                height: 100%;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #fff;
+                font-size: 1.4rem;
+                font-weight: 800;
+                border-radius: var(--radius);
+                cursor: pointer;
+                transition: all 0.2s ease-in;
+                &:hover{
+                    background-color: #cccccc;
+                }
+            }
+
+          
         }
     }
 

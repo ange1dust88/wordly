@@ -35,7 +35,7 @@ function Card({ term, definition }: Card) {
               className='card__front-cont-icon'
               onClick={handleIconClick} 
             />
-            <h1>{term}</h1>
+            <h1 className="card__front-cont-text">{term}</h1>
           </div>
         </div>
         <div className="card__back">
@@ -48,7 +48,7 @@ function Card({ term, definition }: Card) {
                 speakTerm(definition); 
               }}
             />
-            <h1>{definition}</h1>
+            <h1 className="card__front-cont-text">{definition}</h1>
           </div>
         </div>
       </div>

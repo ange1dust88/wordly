@@ -6,6 +6,7 @@ import axios from 'axios';
 import Author from '@/components/Author/Author';
 import Question from '@/components/Question/Question';
 import { questionsData } from './questionsData';
+import useModulesStore from '@/store/modulesStore';
 
 interface UserType {
   author: string;
@@ -14,9 +15,10 @@ interface UserType {
 
 function General() {
 
-  const [modules, setModules] = useState<any>([]);
   const [users, setUsers] = useState<UserType[]>([]);
   const [questions] = useState(questionsData); 
+  const setModules = useModulesStore((state) => state.setModules);
+  const {modules} = useModulesStore();
   useEffect(() => {
     const fetchModules = async () => {
       try {
@@ -26,8 +28,9 @@ function General() {
         console.error("Error fetching modules");  
       }
     };
-  
-    fetchModules();  
+    if(modules.length === 0){
+      fetchModules();  
+    }
   }, []); 
 
   useEffect(() => {
@@ -49,9 +52,9 @@ function General() {
         <h1 className="general__latest-title general-title">Latest modules</h1>
 
         <div className="general__latest-list">
-            { modules.map( (module:any) => (
+            { modules.map( (module:any, index) => (
               <Module
-                key={module.id}
+                key={index}
                 title={module.title}
                 description={module.description}
                 creatorName={module.author}
@@ -67,9 +70,9 @@ function General() {
         <h1 className="general__authors-title general-title">Best authors</h1>
     
         <div className="general__authors-list">
-            { users.map( (user:any) => (
+            { users.map( (user:any, index) => (
               <Author 
-                key = {user.id}
+                key = {index}
                 author = {user.author}
                 moduleCount = {user.moduleCount}
               />

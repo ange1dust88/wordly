@@ -4,6 +4,7 @@ import './memorizingmode.scss';
 import LearningCard from '@/components/LearningCard/LearningCard';
 import Result from '@/components/Result/Result';
 import axios from 'axios';
+import useUserStore from '@/store/userStore';
 
 interface WordType {
   term: string;
@@ -27,6 +28,14 @@ function MemorizingMode() {
   const [wrongAnswers, setWrongAnswers] = useState<number>(0);
   const [shuffledOptions, setShuffledOptions] = useState<WordType[]>([]);
   const navigate = useNavigate();
+  const {user} = useUserStore();
+
+  useEffect(() => {
+    if(!user){
+      navigate('/login');
+    }
+  })
+  
 
   useEffect(() => {
     if (code) {

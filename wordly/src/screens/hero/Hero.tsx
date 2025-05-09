@@ -16,12 +16,11 @@ function Hero() {
 
                       <div className="hero__left-buttons">
                           <Link to ='/login'><button className='button button--black'>Start now &gt;</button></Link>
-                          <button className='button hero__left-buttons-button'>Contact us &gt;</button>
                       </div>
                   </div>
 
                   <div className="hero__right">
-                      <img src="example.png" alt="" />
+                      <img src="frame.png" alt="" />
                   </div>
 
               </div>

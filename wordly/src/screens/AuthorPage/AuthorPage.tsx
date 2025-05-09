@@ -1,21 +1,27 @@
 import Mainheader from '@/components/Mainheader/Mainheader';
 import './authorpage.scss'
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Module from '../../components/Module/Module'
+import useUserStore from '@/store/userStore';
 
 
 function AuthorPage() {
     const [userInfo, setUserInfo] = useState<any>();
-    const location = useLocation(); 
     const navigate = useNavigate();
     const { author } = useParams<{ author: string }>();
-
+    const {user} = useUserStore();
     const handleLogout = () => {
     navigate('/login');
     };
+
+    useEffect(() => {
+      if(!user){
+        navigate('/login');
+      }
+    })
 
     useEffect(() => {
         const fetchUserModules = async () => {

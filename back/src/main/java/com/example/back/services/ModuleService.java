@@ -42,15 +42,15 @@ public class ModuleService {
     }
 
     public Map<String, Object> getUserModulesByUsername(String username) {
-        User user = userRepository.findByUsername(username);
+        Optional<User> user = userRepository.findByUsername(username);
         if (user == null) {
             return null;
         }
 
-        List<StudyModules> modules = studyModulesRepository.findByAuthor(user.getUsername());
+        List<StudyModules> modules = studyModulesRepository.findByAuthor(user.get().getUsername());
 
         Map<String, Object> result = new HashMap<>();
-        result.put("username", user.getUsername());
+        result.put("username", user.get().getUsername());
         result.put("modules", modules);
         return result;
     }

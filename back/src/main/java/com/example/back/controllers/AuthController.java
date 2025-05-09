@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 
 @RestController
 @RequestMapping("/api/auth")
@@ -50,11 +50,13 @@ public class AuthController {
             return ResponseEntity.badRequest().body("Invalid email format!");
         }
 
-        if (userRepository.findByEmail(user.getEmail()) != null) {
+        Optional<User> existingEmailUser = userRepository.findByEmail(user.getEmail());
+        if (existingEmailUser.isPresent()) {
             return ResponseEntity.badRequest().body("Email is already in use!");
         }
 
-        if (userRepository.findByUsername(user.getUsername()) != null) {
+        Optional<User> existingUsernameUser = userRepository.findByUsername(user.getUsername());
+        if (existingUsernameUser.isPresent()) {
             return ResponseEntity.badRequest().body("Username is already in use!");
         }
 
@@ -69,13 +71,13 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<String> loginUser(@RequestBody User user) {
 
-        User existingUser = userRepository.findByUsername(user.getUsername());
-        if (existingUser == null) {
+        Optional<User> existingUser = userRepository.findByUsername(user.getUsername());
+        if (existingUser.isEmpty()) {
             return ResponseEntity.badRequest().body("User not found!");
         }
 
         String hashedPassword = hashPassword(user.getPassword());
-        if (!hashedPassword.equals(existingUser.getPassword())) {
+        if (!hashedPassword.equals(existingUser.get().getPassword())) {
             return ResponseEntity.badRequest().body("Invalid password!");
         }
 

@@ -12,6 +12,21 @@ import {
 } from "@/components/ui/carousel";
 import axios from 'axios';
 import Loader from '@/components/Loader/Loader';
+import useUserStore from '@/store/userStore';
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+
+
 
 interface WordType {
   term: string;
@@ -28,6 +43,7 @@ interface ModuleTypes {
 }
 
 function ModuleDetail() {
+  const { user } = useUserStore();
   const { code } = useParams();  
   const [moduleData, setModuleData] = useState<ModuleTypes | null>(null); 
   const navigate = useNavigate();
@@ -69,9 +85,29 @@ function ModuleDetail() {
     navigate('/login');
   };
 
+  const buyPremium = async () => {
+    try {
+      const response = await axios.post('http://localhost:8080/api/stripe/create-checkout-session');
+      const { url } = response.data;
+      if (url) {
+        window.location.href = url;
+      }
+    } catch (err) {
+      console.error('Failed to create Stripe session:', err);
+      alert('Error while starting payment.');
+    }
+  }
+
   if (!moduleData) {
     return <Loader/>;
   }
+
+  useEffect(() => {
+    if(!user){
+      navigate('/login');
+    }
+  })
+  
 
   return (
     <div className="dashboard">
@@ -98,23 +134,53 @@ function ModuleDetail() {
           </div>
 
           <div className="moduledetails__modes">
+          
             <Link to ={`/module-detail/${code}/cardMode`} className="moduledetails__modes-mode">
               <div className="moduledetails__modes-mode-cont">
                 <h2> Cards <span>🖼️</span></h2>
               </div>
             </Link>
-
+            
             <Link to ={`/module-detail/${code}/memorizingMode`} className="moduledetails__modes-mode">
               <div className="moduledetails__modes-mode-cont">
                 <h2>Memorizing<span>🔊</span></h2>
               </div>
             </Link>
 
-            <Link to ={`/module-detail/${code}/testMode`} className="moduledetails__modes-mode">
-              <div className="moduledetails__modes-mode-cont">
-                <h2>Test <span>📄</span></h2>
-              </div>
-            </Link>
+            {user?.premium ? (
+              <Link to ={`/module-detail/${code}/testMode`} className="moduledetails__modes-mode">
+                <div className="moduledetails__modes-mode-cont">
+                  <h2>Test <span>📄</span></h2>
+                </div>
+              </Link>
+            ):(
+
+              <AlertDialog>
+                <AlertDialogTrigger className="moduledetails__modes-mode">
+                    <div className="moduledetails__modes-mode-premium">
+                      <h2> Premium only</h2>
+                    </div>
+                </AlertDialogTrigger>
+                <AlertDialogContent className='w-full flex flex-col'>
+              
+                  <AlertDialogHeader>
+                    <AlertDialogTitle className='text-3xl'>Ready to level up?</AlertDialogTitle>
+                    <AlertDialogDescription >
+                      <span className='text-lg'>Test Mode is now available for Premium users — just <b>$10 for lifetime access</b></span>  
+                      <h3 className='text-lg'>You’ll get:</h3>
+                      <p className='text-lg'>• Full access to Test Mode</p>
+                      <p className='text-lg'>• All future premium updates — no extra cost</p>
+                      <p className='text-lg text-black'>Support development and get early access today!</p>
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Not now</AlertDialogCancel>
+                    <AlertDialogAction onClick = {buyPremium}>Get Premium Access</AlertDialogAction>
+                  </AlertDialogFooter>
+
+                </AlertDialogContent>
+              </AlertDialog>
+            )}
           </div>
       
           <Carousel setApi={setApi} className='moduledetails__cards'>

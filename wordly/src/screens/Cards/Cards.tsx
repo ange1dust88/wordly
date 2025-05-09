@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './cards.scss';
 import CardTemplate from '@/components/CardTemplate/CardTemplate';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import useUserStore from "@/store/userStore"; 
+import useModulesStore from "@/store/modulesStore"; 
+import { useNavigate } from 'react-router-dom';
 
 interface CardData {
   term: string;
@@ -18,13 +20,23 @@ function Cards() {
   ]);
   const [moduleTitle, setModuleTitle] = useState('');
   const [moduleDescription, setModuleDescription] = useState('');
-
+  const { addModule: addModuleToStore } = useModulesStore();
+  const navigate = useNavigate();
   const addCard = () => {
     setCards(prevCards => [
       ...prevCards,
       { term: '', definition: '' },
     ]);
   };
+
+
+  
+  useEffect(() => {
+    if(!user){
+      navigate('/login');
+    }
+  })
+    
 
   const deleteCard = (index: number) => {
     setCards(prevCards => prevCards.filter((_, i) => i !== index));
@@ -44,6 +56,12 @@ function Cards() {
       return;
     }
 
+    const author = user?.username;
+    if (!author) {
+      console.error("Author is required!");
+      return;
+    }
+
     const moduleData = {
       title: moduleTitle,
       description: moduleDescription,
@@ -58,6 +76,7 @@ function Cards() {
 
     try {
       await axios.post("http://localhost:8080/api/modules", moduleData);
+      addModuleToStore(moduleData);
       setModuleTitle('');
       setModuleDescription('');
       setCards([{ term: '', definition: '' }, { term: '', definition: '' }]);
@@ -66,6 +85,7 @@ function Cards() {
       console.error('Error during module creation:', error);
     }
   };
+
 
   return (
     <div className="cards">

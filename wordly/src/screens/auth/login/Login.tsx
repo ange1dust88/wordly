@@ -1,22 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SmallHeader from "../../../components/smallHeader/SmallHeader";
 import './login.scss';
 import axios from "axios";
 import useUserStore from "@/store/userStore"; 
 
-
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const setUser = useUserStore((state) => state.setUser);
-
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value);
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
-  const handleRememberMeChange = (e: React.ChangeEvent<HTMLInputElement>) => setRememberMe(e.target.checked);
 
   const handleLogin = async () => {
     if (username && password) {
@@ -39,12 +35,49 @@ function Login() {
     }
   };
 
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.origin !== "http://localhost:8080") {
+        console.log("Received message from invalid origin:", event.origin);
+        return;
+      }
+
+      if (event.data) {
+        console.log("Received user data:", event.data); 
+        setUser(event.data); 
+        navigate("/dashboard"); 
+      } else {
+        console.log("No data received in event:", event);
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => {
+      window.removeEventListener("message", handleMessage);
+    };
+  }, [setUser, navigate]);
+
+
+  const handleGithubLogin = () => {
+    const popup = window.open(
+      "http://localhost:8080/oauth2/authorization/github",
+      "_blank",
+      "width=500,height=600"
+    );
+
+    const timer = setInterval(() => {
+      if (!popup || popup.closed) {
+        clearInterval(timer);
+      }
+    }, 500);
+  };
+
+
 
   const fetchUserInfo = async (username:string) => {
     try {
       const response = await axios.get(`http://localhost:8080/api/users/${username}`);
       setUser(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("Error fetching users");
     }
@@ -77,15 +110,6 @@ function Login() {
               />
             </div>
 
-            <div className="login__box-inputs-checkbox">
-              <input
-                type="checkbox"
-                checked={rememberMe}
-                onChange={handleRememberMeChange}
-              />
-              <p> Remember me on this device</p>
-            </div>
-
             {error ? (
               <p className="error-active">{error}</p>
             ) : (
@@ -101,12 +125,12 @@ function Login() {
 
             <p className="login__box-inputs-border">or</p>
 
-            <a 
-              href="http://localhost:8080/oauth2/authorization/github"
+            <button 
+              onClick={handleGithubLogin}
               className="login__box-inputs-social">
                 <img src="github-logo.png"/>
               Sign in with GitHub
-            </a>
+            </button>
           </div>
 
           <span className="login__box-bottom">

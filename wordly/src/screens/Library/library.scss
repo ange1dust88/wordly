@@ -1,0 +1,99 @@
+.library{
+    &__container{
+        max-width: 1250px;
+        width: 100%;
+    }
+    &__top{
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        
+        &-img{
+            border-radius: 50%;
+        }
+
+        &-username{
+            font-size:2.5rem;
+        }
+        &-email{
+            font-size:1.3rem;
+            font-weight: lighter;
+        }
+        &-status{
+            font-size:1.3rem;
+            font-weight: lighter;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        &-right{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        &-button{
+            background: linear-gradient(45deg, 
+                rgba(255, 0, 0, 0.7),  
+                rgba(0, 0, 255, 0.4), 
+                rgba(255, 165, 0, 0.6),
+                rgba(128, 0, 128, 0.5)  
+            );
+            transition: all 0.2s ease-in-out;
+            padding: 0.3rem 0.6rem;
+            font-weight: 700;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 20px #b3b3b367;
+    
+            &:hover{
+                background-color: #e2e2e2;
+                cursor: pointer;
+            }
+            &:active{
+                background-color: #b3b3b3;
+            }
+        }
+    }
+    &__modules {
+        margin-top: 2rem;
+        display: grid;
+        gap: 3.6rem;
+        grid-template-columns: repeat(3, 1fr); 
+        grid-template-rows: repeat(3, 1fr);
+                                   
+    }
+
+    &__bottom {
+        display: flex;
+        justify-content: end;
+        &-button{
+            background: linear-gradient(45deg, 
+                rgba(255, 0, 0, 0.7),  
+                rgba(0, 0, 255, 0.4), 
+                rgba(255, 165, 0, 0.6),
+                rgba(128, 0, 128, 0.5)  
+            );
+            transition: all 0.2s ease-in-out;
+            padding: 0.3rem 0.6rem;
+            font-weight: 700;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 20px #b3b3b367;
+    
+            &:hover{
+                background-color: #e2e2e2;
+                cursor: pointer;
+            }
+            &:active{
+                background-color: #b3b3b3;
+            }
+        }
+    }
+
+}

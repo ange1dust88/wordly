@@ -2,6 +2,9 @@ package com.example.back.services;
 
 import com.example.back.models.User;
 import com.example.back.repositories.UserRepository;
+
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
@@ -27,11 +30,14 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         String username = oauth2User.getAttribute("login"); 
         String email = oauth2User.getAttribute("email");
+        System.out.println("OAuth2 login: " + username);
 
-        User existingUser = userRepository.findByEmail(email);
-        if (existingUser != null) {
+
+        Optional<User> existingUser = userRepository.findByEmail(email);
+        if (existingUser.isPresent()) {
             return oauth2User;
         }
+
 
         User newUser = new User();
         newUser.setUsername(username);

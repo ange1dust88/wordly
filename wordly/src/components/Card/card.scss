@@ -29,6 +29,7 @@
     backface-visibility: hidden;
     border-radius: var(--radius);
 
+
     background: linear-gradient(45deg, 
                     rgba(255, 0, 0, 0.7),  
                     rgba(0, 0, 255, 0.4), 
@@ -48,6 +49,11 @@
             align-items: center;
             border-radius: var(--radius);
             background-color: #fff;
+            text-align: center;
+
+            h1{
+              font-weight: 300;
+            }
 
             &-icon{
               position: absolute;

@@ -10,6 +10,8 @@ import CardMode from './screens/Modes/CardMode/CardMode';
 import MemorizingMode from './screens/Modes/MemorizingMode/MemorizingMode';
 import QuestionScreen from './screens/QuestionScreen/QuestionScreen';
 import AuthorPage from './screens/AuthorPage/AuthorPage';
+import Success from './screens/Success/Success';
+import Cancel from './screens/Cancel/Cancel';
 
 
 function App() {
@@ -27,6 +29,9 @@ function App() {
           <Route path="/module-detail/:code/testMode" element={<TestMode />} /> 
           <Route path="/module-detail/:code/memorizingMode" element={<MemorizingMode />} /> 
           <Route path="/profile/:author" element={<AuthorPage />} />
+          <Route path="/success" element={<Success />} />
+          <Route path="/cancel" element={<Cancel />} />
+
         </Routes>
       </Router>
     </>
@@ -38,6 +43,9 @@ export default App;
 //todo
 
 
+//4242424242424242
+
+
 
 // loader(done)
 // memo fix (done)
@@ -47,17 +55,17 @@ export default App;
 // test fix (done)
 // gui fixes (done)
 // popular questions(done)
-
-
-// state managing (zustand) (done for def login )
-// writing author nickname when creating a module (done for def login )
-
 // screen for authors finish (done)
-// search modules    
+// search modules    (done)
+// library page (done)
+// payment (done)
+// payment webhook (done)
+// success and fail screens (done) 
+// premium users functions  (done)
+// change hero (done)
+// github login zustand (done)
+// users who isnt loged in cant be on dashboad (done)
 
-// library page (half done)
 
-// payment
-// premium users
 
-// alerts after login/creating account etc 
+// tests :(

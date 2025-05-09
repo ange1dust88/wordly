@@ -5,6 +5,7 @@ import Result from '@/components/Result/Result';
 import LearningCardTest from '@/components/LearningCardTest/LearningCardTest';
 import axios from 'axios';
 import Loader from '@/components/Loader/Loader';
+import useUserStore from '@/store/userStore';
 
 interface WordType {
   term: string;
@@ -21,14 +22,20 @@ interface ModuleTypes {
 
 function TestMode() {
   const { code } = useParams();  
+  const {user} = useUserStore();
   const [moduleData, setModuleData] = useState<ModuleTypes | null>(null); 
   const [correctAnswers, setCorrectAnswers] = useState<number>(0);
   const [wrongAnswers, setWrongAnswers] = useState<number>(0);
   const [answeredQuestions, setAnsweredQuestions] = useState<Set<number>>(new Set()); 
   const [showResult, setShowResult] = useState<boolean>(false);
   const [shuffledOptionsMap, setShuffledOptionsMap] = useState<Record<number, WordType[]>>({});
-
-
+  
+  useEffect(() => {
+    if(!user){
+      navigate('/login');
+    }
+  })
+  
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -36,6 +43,11 @@ function TestMode() {
   };
 
 
+  useEffect( () => {
+    if(!user?.premium) {
+      navigate('/dashboard');
+    }
+  }, [])
   useEffect(() => {
     if (code) {
 

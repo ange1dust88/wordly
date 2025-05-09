@@ -8,5 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface StudyModulesRepository extends JpaRepository<StudyModules, Long> {
     StudyModules findByCode(String code);  
+    List<StudyModules> findByTitleContainingIgnoreCase(String title);
     List<StudyModules> findByAuthor(String author);
 }

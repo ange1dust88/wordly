@@ -4,6 +4,9 @@ import com.example.back.models.StudyModules;
 import com.example.back.models.Words;
 import com.example.back.repositories.StudyModulesRepository;
 import com.example.back.repositories.WordsRepository;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,5 +51,10 @@ public class ModuleController {
         return ResponseEntity.ok(module);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<StudyModules>> searchModulesByTitle(@RequestParam("title") String title) {
+        List<StudyModules> modules = moduleRepository.findByTitleContainingIgnoreCase(title);
+        return ResponseEntity.ok(modules);
+    }
 
 }

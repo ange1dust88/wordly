@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import Result from '@/components/Result/Result';
 import axios from 'axios';
+import useUserStore from '@/store/userStore';
 
 interface WordType {
   term: string;
@@ -36,6 +37,14 @@ function CardMode() {
 
   const [knownWords, setKnownWords] = useState<string[]>([]);
   const [unknownWords, setUnknownWords] = useState<string[]>([]);
+  const {user} = useUserStore();
+
+  useEffect(() => {
+    if(!user){
+      navigate('/login');
+    }
+  })
+  
 
   useEffect(() => {
     if (code) {
