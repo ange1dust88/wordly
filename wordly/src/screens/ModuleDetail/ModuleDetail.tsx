@@ -64,6 +64,13 @@ function ModuleDetail() {
     });
   }, [api]);
 
+    useEffect(() => {
+    if(!user){
+      navigate('/login');
+    }
+  })
+  
+
   const fetchModuleDataFromAPI = async (code: string) => {
     try {
       const response = await axios.get(`http://localhost:8080/api/modules/code/${code}`);
@@ -102,12 +109,6 @@ function ModuleDetail() {
     return <Loader/>;
   }
 
-  useEffect(() => {
-    if(!user){
-      navigate('/login');
-    }
-  })
-  
 
   return (
     <div className="dashboard">
