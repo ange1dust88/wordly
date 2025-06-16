@@ -30,7 +30,7 @@ function App() {
           <Route path="/module-detail/:code/memorizingMode" element={<MemorizingMode />} /> 
           <Route path="/profile/:author" element={<AuthorPage />} />
           <Route path="/success" element={<Success />} />
-          <Route path="/cancel" element={<Cancel />} />
+          <Route path="/fail" element={<Cancel />} />
 
         </Routes>
       </Router>
@@ -40,32 +40,3 @@ function App() {
 
 export default App;
 
-//todo
-
-
-//4242424242424242
-
-
-
-// loader(done)
-// memo fix (done)
-// login via github   (done)
-// add prime and balance to user (done)
-// card fix (done)
-// test fix (done)
-// gui fixes (done)
-// popular questions(done)
-// screen for authors finish (done)
-// search modules    (done)
-// library page (done)
-// payment (done)
-// payment webhook (done)
-// success and fail screens (done) 
-// premium users functions  (done)
-// change hero (done)
-// github login zustand (done)
-// users who isnt loged in cant be on dashboad (done)
-
-
-
-// tests :(

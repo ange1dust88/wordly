@@ -4,23 +4,23 @@ import com.example.back.models.User;
 import com.example.back.services.ModuleService;
 import com.example.back.services.UserService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
 
-    @Autowired
-    private ModuleService moduleService;
+    private final ModuleService moduleService;
+    private final UserService userService;
 
-    @Autowired
-    private UserService userService;
+    public UserController(ModuleService moduleService, UserService userService) {
+        this.moduleService = moduleService;
+        this.userService = userService;
+    }
 
     @GetMapping
     public ResponseEntity<List<Map<String, Object>>> getUsersWithModuleCount() {
@@ -30,8 +30,12 @@ public class UserController {
 
     @GetMapping("/{username}")
     public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
-        Optional<User> user = userService.getUserByUsername(username); 
-        return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        User user = userService.getUserByUsername(username);
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.notFound().build();  
+        }
     }
 
     @GetMapping("/{username}/modules")
@@ -40,7 +44,7 @@ public class UserController {
         if (result != null) {
             return ResponseEntity.ok(result);
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.notFound().build();  
         }
     }
 }

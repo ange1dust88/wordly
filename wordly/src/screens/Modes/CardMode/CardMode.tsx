@@ -28,6 +28,7 @@ interface ModuleTypes {
 }
 
 function CardMode() {
+
   const { code } = useParams();  
   const [moduleData, setModuleData] = useState<ModuleTypes | null>(null); 
   const navigate = useNavigate();
@@ -40,9 +41,11 @@ function CardMode() {
   const {user} = useUserStore();
 
   useEffect(() => {
+
     if(!user){
       navigate('/login');
     }
+    
   })
   
 

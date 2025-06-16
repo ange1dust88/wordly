@@ -5,37 +5,40 @@ import com.example.back.models.Words;
 import com.example.back.repositories.StudyModulesRepository;
 import com.example.back.repositories.WordsRepository;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/modules")
-@CrossOrigin(origins = "https://localhost:3000")
 public class ModuleController {
 
-    @Autowired
-    private StudyModulesRepository moduleRepository;
+    private final StudyModulesRepository moduleRepository;
+    private final WordsRepository wordRepository;
 
-    @Autowired
-    private WordsRepository wordRepository;
+    public ModuleController(StudyModulesRepository moduleRepository, WordsRepository wordRepository) {
+        this.moduleRepository = moduleRepository;
+        this.wordRepository = wordRepository;
+    }
 
     @PostMapping
     public ResponseEntity<StudyModules> createModule(@RequestBody StudyModules module) {
+        try {
+            module = moduleRepository.save(module);
 
-        module = moduleRepository.save(module);
+            for (Words word : module.getWords()) {
+                word.setModule(module);
+                wordRepository.save(word);
+            }
 
-        for (Words word : module.getWords()) {
-            word.setModule(module);  
-            wordRepository.save(word);  
+            return ResponseEntity.ok(module); 
+
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null);  
         }
-
-        return ResponseEntity.ok(module);  
     }
 
- 
     @GetMapping
     public ResponseEntity<Iterable<StudyModules>> getAllModules() {
         Iterable<StudyModules> modules = moduleRepository.findAll();
@@ -44,17 +47,17 @@ public class ModuleController {
 
     @GetMapping("/code/{code}")
     public ResponseEntity<StudyModules> getModuleByCode(@PathVariable String code) {
-        StudyModules module = moduleRepository.findByCode(code); 
+        StudyModules module = moduleRepository.findByCode(code);
         if (module == null) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(404).build();
         }
-        return ResponseEntity.ok(module);
+        return ResponseEntity.ok(module); 
     }
 
+    
     @GetMapping("/search")
     public ResponseEntity<List<StudyModules>> searchModulesByTitle(@RequestParam("title") String title) {
         List<StudyModules> modules = moduleRepository.findByTitleContainingIgnoreCase(title);
-        return ResponseEntity.ok(modules);
+        return ResponseEntity.ok(modules);  
     }
-
 }

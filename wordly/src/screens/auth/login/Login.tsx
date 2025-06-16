@@ -37,6 +37,7 @@ function Login() {
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
+      console.log("Received origin:", event.origin);
       if (event.origin !== "http://localhost:8080") {
         console.log("Received message from invalid origin:", event.origin);
         return;

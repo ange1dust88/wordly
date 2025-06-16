@@ -48,9 +48,9 @@ function TestMode() {
       navigate('/dashboard');
     }
   }, [])
+
   useEffect(() => {
     if (code) {
-
       fetchModuleDataFromAPI(code);
     }
   }, [code]);
